@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title> Cuestionario </title>
+    <link rel="stylesheet" href="../css/style.css">
+</head>
+<body>
+    <div class="form">
+        <form action="./generate.py" method="POST">
+            <label for="ftitulo">Título</label>
+            <input type="text" id="t" name="titulo" placeholder="Aqui va un titulo Titulo">
+        
+            <label for="fdescripcion">Descripción</label>
+            <input type="text" id="d" name="descripcion" placeholder="Aquí va una Descripción">
+        
+            <label for="fcampo">Campo</label>
+            <input type="text" id="c" name="campo" placeholder="Aquí va un Campo">
+
+            <label for="fimagen">Imagen</label>
+            <select id="i" name="imagen">
+                <option value="1">Primer lote</option>
+                <option value="2">Segundo lote</option>
+                <option value="3">Tercer lote</option>
+            </select>
+        
+            <input type="submit" value="Crear">
+        </form>
+    </div>
+</body>
+
+</html>
