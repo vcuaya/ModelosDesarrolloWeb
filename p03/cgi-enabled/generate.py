@@ -4,61 +4,9 @@ import os
 import glob
 from pathlib import PureWindowsPath
 
-# Path
-# Get the relative path of the current file with:
-# os.path.relpath(__file__)
-# Get the directory name with:
-# os.path.dirname()
-path = os.path.dirname(os.path.relpath(__file__))
-
-# Get the Windows path in order to get the Posix Path
-p = PureWindowsPath(os.path.dirname(__file__))
-
-# Image formats
-extensions = ['png', 'jpg', 'jpeg', 'gif']
-
-# Variable to get values from send it form
-form = cgi.FieldStorage()
-
-titulo = form.getvalue("titulo")
-descripcion = form.getvalue("descripcion")
-campo = form.getvalue("campo")
-imagen = form.getvalue("imagen")
-
-
-# HTML is following
-print('Content-Type: text/html')
-
-# Leave a blank line
-print('')
-
-# Save all images from directory
-files = []
-
-# Concatenate images using 3 options
-imagenes = ''
-
-if(str(imagen) == '1'):
-    [files.extend(glob.glob(p.as_posix() + '/batch1/*.' + e))
-     for e in extensions]
-    for file in files:
-        imagenes += '<div class="gallery-image"><img src="./batch1/' + \
-            os.path.basename(file) + '" class="image"></div>\n'
-elif(str(imagen) == '2'):
-    [files.extend(glob.glob(p.as_posix() + '/batch2/*.' + e))
-     for e in extensions]
-    for file in files:
-        imagenes += '<div class="gallery-image"><img src="./batch2/' + \
-            os.path.basename(file) + '" class="image"></div>\n'
-elif(str(imagen) == '3'):
-    [files.extend(glob.glob(p.as_posix() + '/batch3/*.' + e))
-     for e in extensions]
-    for file in files:
-        imagenes += '<div class="gallery-image"><img src="./batch3/' + \
-            os.path.basename(file) + '" class="image"></div>\n'
-
 # Format text in HTML document
-pagina = """
+def plantilla(titulo, descripcion, campo, imagenes):
+    print("""
 <!DOCTYPE html>
 <html lang="en">
 
@@ -104,6 +52,71 @@ pagina = """
 </body>
 
 </html>
-"""
+""")
 
-print(pagina)
+
+# Path
+# Get the relative path of the current file with:
+# os.path.relpath(__file__)
+# Get the directory name with:
+# os.path.dirname()
+path = os.path.dirname(os.path.relpath(__file__))
+
+# Get the Windows path in order to get the Posix Path
+p = PureWindowsPath(os.path.dirname(__file__))
+
+# Image formats
+extensions = ['png', 'jpg', 'jpeg', 'gif']
+
+# Variable to get values from send it form
+form = cgi.FieldStorage()
+
+# titulo = form.getvalue("titulo")
+# descripcion = form.getvalue("descripcion")
+# campo = form.getvalue("campo")
+page = form.getvalue("page")
+
+# HTML is following
+print('Content-Type: text/html')
+
+# Leave a blank line
+print('')
+
+# Save all images from directory
+files = []
+
+# Concatenate images using 3 options
+imagenes = ''
+
+if(str(page) == '1'):
+    titulo = "Inmuebles Kaiser"
+    descripcion = "Todas las casas se distinguen por tener un moderno diseño interior que aprovecha al máximo los espacios. Los colores, texturas y formas, tanto de fachadas como de interiores, se integran perfectamente con el entorno y permanecen atractivas con el paso del tiempo."
+    campo = "Desde $ 1, 000 000.00"
+    [files.extend(glob.glob(p.as_posix() + '/batch1/*.' + e))
+     for e in extensions]
+    for file in files:
+        imagenes += '<div class="gallery-image"><img src="./batch1/' + \
+            os.path.basename(file) + '" class="image"></div>\n'
+    plantilla(titulo, descripcion, campo, imagenes)
+
+elif(str(page) == '2'):
+    titulo = "Autos Mars"
+    descripcion = "Los Precios aquí establecidos, son de lista en Moneda Nacional de los Estados Unidos Mexicanos, aplica para CUPRA León MY 2023 en compra de contado e Impuesto al Valor Agregado (IVA), así como el Impuesto Sobre Autos Nuevos (ISAN cuando aplique). Estos precios únicamente son para el año modelo y versiones de los vehículos aquí mencionados y estarán vigentes del 01 al 30 de septiembre del 2022. Los precios pueden variar dependiendo de la versión y equipamiento del vehículo, por tal motivo para mayor información consulte a su Distribuidor autorizado CUPRA."
+    campo = "$1 , 500 000.00"
+    [files.extend(glob.glob(p.as_posix() + '/batch2/*.' + e))
+     for e in extensions]
+    for file in files:
+        imagenes += '<div class="gallery-image"><img src="./batch2/' + \
+            os.path.basename(file) + '" class="image"></div>\n'
+    plantilla(titulo, descripcion, campo, imagenes)
+
+elif(str(page) == '3'):
+    titulo = "Paisajes"
+    descripcion = "Los mejores paisajes que puedas ver desde tu equipo de computo"
+    campo = "Descargar"
+    [files.extend(glob.glob(p.as_posix() + '/batch3/*.' + e))
+     for e in extensions]
+    for file in files:
+        imagenes += '<div class="gallery-image"><img src="./batch3/' + \
+            os.path.basename(file) + '" class="image"></div>\n'
+    plantilla(titulo, descripcion, campo, imagenes)
