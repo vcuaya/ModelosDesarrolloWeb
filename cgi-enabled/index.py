@@ -80,12 +80,12 @@ def table():
     random.shuffle(cards)
 
     # String to append
-    answer = ""
+    answer = "\n"
     for i in range(4):
-        answer += '<tr>\n'
+        answer += '\t<tr>\n'
         for j in range(5):
-            answer += str(cards.pop())
-        answer += '</tr>\n'
+            answer += '\t\t'+str(cards.pop())
+        answer += '\t</tr>\n'
 
     return answer
 
