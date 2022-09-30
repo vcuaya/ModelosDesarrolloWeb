@@ -88,7 +88,7 @@ files = []
 # Concatenate images using 3 options
 imagenes = ''
 
-if(str(page) == '1'):
+if (str(page) == '1'):
     titulo = "Inmuebles Kaiser"
     descripcion = "Todas las casas se distinguen por tener un moderno diseño interior que aprovecha al máximo los espacios. Los colores, texturas y formas, tanto de fachadas como de interiores, se integran perfectamente con el entorno y permanecen atractivas con el paso del tiempo."
     campo = "Desde $ 1, 000 000.00"
@@ -99,7 +99,7 @@ if(str(page) == '1'):
             os.path.basename(file) + '" class="image"></div>\n'
     plantilla(titulo, descripcion, campo, imagenes)
 
-elif(str(page) == '2'):
+elif (str(page) == '2'):
     titulo = "Autos Mars"
     descripcion = "Los Precios aquí establecidos, son de lista en Moneda Nacional de los Estados Unidos Mexicanos, aplica para CUPRA León MY 2023 en compra de contado e Impuesto al Valor Agregado (IVA), así como el Impuesto Sobre Autos Nuevos (ISAN cuando aplique). Estos precios únicamente son para el año modelo y versiones de los vehículos aquí mencionados y estarán vigentes del 01 al 30 de septiembre del 2022. Los precios pueden variar dependiendo de la versión y equipamiento del vehículo, por tal motivo para mayor información consulte a su Distribuidor autorizado CUPRA."
     campo = "$1 , 500 000.00"
@@ -110,7 +110,7 @@ elif(str(page) == '2'):
             os.path.basename(file) + '" class="image"></div>\n'
     plantilla(titulo, descripcion, campo, imagenes)
 
-elif(str(page) == '3'):
+elif (str(page) == '3'):
     titulo = "Paisajes"
     descripcion = "Los mejores paisajes que puedas ver desde tu equipo de computo"
     campo = "Descargar"
