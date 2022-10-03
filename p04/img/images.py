@@ -23,7 +23,7 @@ files = []
 # Concatenate images
 images = []
 for file in files:
-    images.append('<td><img src="./../p04/img/' + os.path.basename(file) + '"></td>\n')
+    images.append(os.path.basename(file))
 
 # Returns the images array
 def get():
