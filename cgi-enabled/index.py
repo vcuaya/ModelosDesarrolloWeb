@@ -28,29 +28,34 @@ def template(title, table):
 <html>
 
 <head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width">
-  <title>""" + title + """</title>
-  <link href="./<p00>/css/style.css" rel="stylesheet" type="text/css" />
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
+	<title>""" + title + """</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-iYQeCzEYFbKjA/T2uDLTpkwGzCiq6soy8tYaI1GyVh/UjpbCx/TYkiZhlZB6+fzT" crossorigin="anonymous">
+  <link href="./../p04/css/style.css" rel="stylesheet" type="text/css" />
 </head>
 
-<body>
-  <table>
-    <thead>
-      <tr>
-        <th colspan="5">Golden Stars Memorama</th>
-      </tr>
-    </thead>
-    <tbody>
+<body class="bg-dark">
+	<div class="table-responsive">
+		<table class="table table-dark">
+			<thead>
+				<tr>
+					<th class="text-center thead-font-border" colspan="5">""" + title + """</th>
+				</tr>
+			</thead>
+			<tbody>
     """ + table + """
-    </tbody>
-      <tfoot>
-        <tr>
-          <th colspan="5">Puntaje</th>
-        </tr>
-      </tfoot>
-    </table>
-  <script src="./<p00>/js/script.js"></script>
+			</tbody>
+			<tfoot>
+				<tr>
+					<th class="text-center tfoot-font-border" colspan="2">Puntaje</th>
+				</tr>
+			</tfoot>
+		</table>
+	</div>
+	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/js/bootstrap.bundle.min.js"
+		integrity="sha384-u1OknCvxWvY5kfmNBILK2hRnQC3Pr17a+RTT6rIHI7NnikvbZlHgTPOOmMi466C8"
+		crossorigin="anonymous"></script>
 </body>
 
 </html>
@@ -84,14 +89,14 @@ def table(flipped, cards):
     board = cards
     for x in range(20):
         if not flipped[x]:
-          board[x]='378px-NAP-01_Back.png'
+          board[x]='200px-NAP-01_Back.png'
     board.reverse()
     # String to append
     string = "\n"
     for i in range(4):
         string += '\t<tr>\n'
         for j in range(5):
-            string += '\t\t'+'<td><img src="./../p04/img/' + \
+            string += '\t\t'+'<td><img class="img-thumbnail img-fluid" src="./../p04/img/' + \
                 str(board.pop())+'"></td>\n'
         string += '\t</tr>\n'
     return string
@@ -118,4 +123,4 @@ cards = getCards()
 images = table(flipped, cards)
 
 # Impresión de la página
-template("CGI", images)
+template("Golden Stars Memorama", images)
