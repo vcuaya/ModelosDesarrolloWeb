@@ -10,8 +10,6 @@ scriptPath = os.path.dirname(__file__)
 modulePath = os.path.join(scriptPath, '..', 'p04', 'img')
 sys.path.append(modulePath)
 import images as img
-# To get all images
-# images.get()
 
 # HTML is following
 print('Content-Type: text/html')
@@ -20,8 +18,8 @@ print('Content-Type: text/html')
 print('')
 
 # Variable to get values from send it form
-#form = cgi.FieldStorage()
-#page = form.getvalue("page")
+form = cgi.FieldStorage()
+page = form.getvalue("page")
 
 # Format text in HTML document
 def template(title, table):
@@ -59,7 +57,7 @@ def template(title, table):
 """)
 
 
-def table():
+def getCards():
     # Get images from images module
     aux = img.get()
 
@@ -67,28 +65,57 @@ def table():
     random.shuffle(aux)
 
     # Cards array for use in the boardgame
-    cards = []
+    basenames = []
 
     # Append images into cards
     for x in range(10):
-        cards.append(aux.pop())
+        basenames.append(aux.pop())
 
     # Duplicate cards array
-    cards.extend(cards)
+    basenames.extend(basenames)
 
     # Shuffle cards array
-    random.shuffle(cards)
+    random.shuffle(basenames)
 
+    return basenames
+
+
+def table(flipped, cards):
+    board = cards
+    for x in range(20):
+        if not flipped[x]:
+          board[x]='378px-NAP-01_Back.png'
+    board.reverse()
     # String to append
-    answer = "\n"
+    string = "\n"
     for i in range(4):
-        answer += '\t<tr>\n'
+        string += '\t<tr>\n'
         for j in range(5):
-            answer += '\t\t'+str(cards.pop())
-        answer += '\t</tr>\n'
+            string += '\t\t'+'<td><img src="./../p04/img/' + \
+                str(board.pop())+'"></td>\n'
+        string += '\t</tr>\n'
+    return string
 
-    return answer
 
-t=table()
+""" flipped = [
+    False, False, False, False, False,
+    False, False, False, False, False,
+    False, False, False, False, False,
+    False, False, False, False, False
+] """
 
-template("CGI", t)
+flipped = [
+    True, True, False, False, False,
+    False, False, False, False, False,
+    False, False, False, False, False,
+    False, False, False, False, True
+]
+
+# Tarjetas del tablero
+cards = getCards()
+
+# Imágenes para la plantilla
+images = table(flipped, cards)
+
+# Impresión de la página
+template("CGI", images)
