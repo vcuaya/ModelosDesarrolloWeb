@@ -1,10 +1,10 @@
 #!/usr/bin/python3
 
+from http import cookies
 import os
 import cgi
 import sys
 import random
-from http import cookies
 
 # Get path to my module
 scriptPath = os.path.dirname(__file__)
@@ -12,25 +12,9 @@ modulePath = os.path.join(scriptPath, '..', 'p04', 'img')
 sys.path.append(modulePath)
 import images as img
 
-# Create Cookie
-C = cookies.SimpleCookie()
-
-# Set Cookie
-C["board"] = "0000"
-
-# Generate HTTP headers
-print(C)
-
-# HTML is following
-print('Content-Type: text/html')
-
-# Leave a blank line
-print('')
-
 # Variable to get values from send it form
 form = cgi.FieldStorage()
 card = form.getvalue("card")
-cookie = C["board"].value
 
 # Format text in HTML document
 
@@ -69,6 +53,7 @@ def template(title, table):
 	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/js/bootstrap.bundle.min.js"
 		integrity="sha384-u1OknCvxWvY5kfmNBILK2hRnQC3Pr17a+RTT6rIHI7NnikvbZlHgTPOOmMi466C8"
 		crossorigin="anonymous"></script>
+    <script src="./p04/js/script.js"></script>
 </body>
 
 </html>
@@ -80,7 +65,7 @@ def getCards():
     aux = img.get()
 
     # Shuffle aux array
-    random.shuffle(aux)
+    # random.shuffle(aux)
 
     # Cards array for use in the boardgame
     basenames = []
@@ -93,7 +78,7 @@ def getCards():
     basenames.extend(basenames)
 
     # Shuffle cards array
-    random.shuffle(basenames)
+    # random.shuffle(basenames)
 
     return basenames
 
@@ -109,8 +94,13 @@ def table(flipped, cards):
     for i in range(1):
         string += '\t<tr>\n'
         for j in range(4):
-            string += '\t\t'+'<td><img class="img-thumbnail img-fluid" src="./../p04/img/' + \
-                str(board.pop())+'"></td>\n'
+            aux = board.pop()
+            if aux == '200px-NAP-01_Back.png':
+                string += '\t\t<td><a href="./cookies.py?card=' + str(j) + \
+                    '"><img class="img-thumbnail img-fluid" src="./../p04/img/200px-NAP-01_Back.png"></a></td>\n'
+            else:
+                string += '\t\t<td><img class="img-thumbnail img-fluid" src="./../p04/img/' + \
+                    aux + '"></td>\n'
         string += '\t</tr>\n'
     return string
 
@@ -121,7 +111,7 @@ def flip(card, board):
     return board
 
 
-def getCookie():
+def getCookie(cookie):
     flipped = [None, None, None, None]
     for i, element in enumerate(cookie):
         if cookie[i] == "0":
@@ -131,15 +121,42 @@ def getCookie():
     return flipped
 
 
-# Tarjetas del tablero
+def setCookie(board):
+    flipped = ""
+    for i, element in enumerate(board):
+        if board[i] == False:
+            flipped += "0"
+        elif board[i] == True:
+            flipped += "1"
+    return flipped
+
+
+C = cookies.SimpleCookie()
+exist = os.environ.get('HTTP_COOKIE')
 cards = getCards()
+
+if not exist:
+    C['board'] = "0000"
+    print(C)
+else:
+    C.load(exist)
 
 if card is None:
     board = [False, False, False, False]
     images = table(board, cards)
-    template("Golden Stars Memorama", images)
+
 else:
-    board = getCookie()
+    cookie = C['board'].value
+    board = getCookie(cookie)
     newBoard = flip(int(card), board)
+    C['board'] = setCookie(newBoard)
+    print(C)
     images = table(newBoard, cards)
-    template("Golden Stars Memorama", images)
+
+# HTML is following
+print('Content-Type: text/html')
+
+# Leave a blank line
+print('')
+
+template("Golden Stars Memorama", images)
