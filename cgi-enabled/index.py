@@ -29,7 +29,7 @@ print('')
 
 # Variable to get values from send it form
 form = cgi.FieldStorage()
-page = form.getvalue("page")
+card = form.getvalue("card")
 cookie = C["board"].value
 
 # Format text in HTML document
