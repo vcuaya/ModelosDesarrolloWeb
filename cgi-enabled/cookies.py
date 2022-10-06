@@ -1,7 +1,14 @@
 #!/usr/bin/python3
 
-import cgi
 from http import cookies
+import cgi
+
+# Create Cookie
+C = cookies.SimpleCookie()
+# Set Cookie
+C["board"] = "00000000000000000000"
+# Generate HTTP headers
+print(C)
 
 # HTML is following
 print('Content-Type: text/html')
@@ -9,59 +16,15 @@ print('Content-Type: text/html')
 # Leave a blank line
 print('')
 
+# Variable to get values from send it form
+form = cgi.FieldStorage()
+page = form.getvalue("page")
 
-def plantilla(title):
-    print("""
-<!DOCTYPE html>
-<html>
+cookie = C["board"].value
 
-<head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width">
-  <title>""" + title + """</title>
-  <link href="./<p00>/css/style.css" rel="stylesheet" type="text/css" />
-</head>
+print(cookie)
+print()
 
-<body>
-  <p>Hello world</p>
-  <script src="./<p00>/js/script.js"></script>
-</body>
+C["board"] = "00000000000000011010"
 
-</html>
-""")
-
-
-""" C = cookies.SimpleCookie()
-C["fig"] = "newton"
-C["sugar"] = "wafer"
-print(C)  # generate HTTP headers
-print(C.output())  # same thing """
-
-C = cookies.SimpleCookie()
-C["rocky"] = "road"
-C["rocky"]["path"] = "/cookie"
-print(C.output(header="Cookie:"))
-print(C.output(attrs=[], header="Cookie:"))
-
-C = cookies.SimpleCookie()
-C.load("chips=ahoy; vienna=finger")  # load from a string (HTTP header)
-print(C)
-
-C = cookies.SimpleCookie()
-C.load('keebler="E=everybody; L=\\"Loves\\"; fudge=\\012;";')
-print(C)
-
-C = cookies.SimpleCookie()
-C["oreo"] = "doublestuff"
-C["oreo"]["path"] = "/"
-print(C)
-
-C = cookies.SimpleCookie()
-C["twix"] = "none for you"
-C["twix"].value
-C = cookies.SimpleCookie()
-C["number"] = 7  # equivalent to C["number"] = str(7)
-C["string"] = "seven"
-C["number"].value
-C["string"].value
-print(C)
+print(C["board"].value)
