@@ -42,7 +42,7 @@ def table(flipped, cards):
         for j in range(cols):
             aux = board.pop()
             if aux == '200px-NAP-01_Back.png':
-                string += '\t\t<td><a href="./cookie.py?card=' + str(i*cols+j) + \
+                string += '\t\t<td><a href="./index.py?card=' + str(i*cols+j) + \
                     '"><img class="img-thumbnail img-fluid" src="./../p04/img/200px-NAP-01_Back.png"></a></td>\n'
             else:
                 string += '\t\t<td><img class="img-thumbnail img-fluid" src="./../p04/img/' + \
