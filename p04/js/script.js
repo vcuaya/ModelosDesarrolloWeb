@@ -1,1 +1,0 @@
-$.get("./../../cgi-enabled/cookies.py", {card: "1"});
