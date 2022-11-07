@@ -1,0 +1,35 @@
+div {
+    padding-top: 1%;
+    padding-right: 10%;
+    padding-bottom: 10%;
+    padding-left: 10%;
+}
+
+table {
+    width: 70%;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+tr {
+    border-style: none;
+}
+
+img {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    object-fit: cover;
+    width: 40%;
+    height: 25%;
+}
+
+.thead-font-border {
+    font-size: 48px;
+    border-style: none;
+}
+
+.tfoot-font-border {
+    font-size: 36px;
+    font-weight: bold;
+}
