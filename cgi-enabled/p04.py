@@ -1,32 +1,26 @@
 #!/usr/bin/python3
+
 from http import cookies
 from math import floor
-import requests
 import os
 import cgi
-<<<<<<< HEAD
 from re import A
 import sys
-#import random
-import time
+import random
 
 # Get path to my module
 scriptPath = os.path.dirname(__file__)
 modulePath = os.path.join(scriptPath, '..', 'p04', 'img')
 sys.path.append(modulePath)
 import images as img
-=======
->>>>>>> 849c3ab941172e415318fb0af1d7dccd711cfbc4
 
 # Variable to get values from send it form
 form = cgi.FieldStorage()
 card = form.getvalue("card")
-
 # Rows and columns
 rows = 4
 cols = 5
 total = rows * cols
-
 # Cookie
 C = cookies.SimpleCookie()
 exist = os.environ.get('HTTP_COOKIE')
@@ -34,19 +28,6 @@ cards = ""
 attempts = 0
 matched = 0
 score = 0
-
-
-def query(card):
-    url = "http://127.0.0.1:5000?card="
-
-    payload = {}
-    headers = {}
-
-    response = requests.request(
-        "GET", url + card, headers=headers, data=payload)
-
-    return response.text
-
 
 def table(flipped, cards):
     board = cards
@@ -62,13 +43,12 @@ def table(flipped, cards):
             aux = board.pop()
             if aux == '200px-NAP-01_Back.png':
                 string += '\t\t<td><a href="./index.py?card=' + str(i*cols+j) + \
-                    '"><img class="img-thumbnail img-fluid" src="./../p05/img/200px-NAP-01_Back.png"></a></td>\n'
+                    '"><img class="img-thumbnail img-fluid" src="./../p04/img/200px-NAP-01_Back.png"></a></td>\n'
             else:
-                string += '\t\t<td><img class="img-thumbnail img-fluid" src="./../p05/img/' + \
+                string += '\t\t<td><img class="img-thumbnail img-fluid" src="./../p04/img/' + \
                     aux + '"></td>\n'
         string += '\t</tr>\n'
     return string
-
 
 def template(title, table, attempts, matched, score):
     print("""
@@ -80,11 +60,10 @@ def template(title, table, attempts, matched, score):
 	<meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
 	<title>""" + title + """</title>
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-iYQeCzEYFbKjA/T2uDLTpkwGzCiq6soy8tYaI1GyVh/UjpbCx/TYkiZhlZB6+fzT" crossorigin="anonymous">
-  <link href="./../p05/css/style.css" rel="stylesheet" type="text/css" />
+  <link href="./../p04/css/style.css" rel="stylesheet" type="text/css" />
 </head>
 
 <body class="bg-dark">
-    
 	<div class="table-responsive">
 		<table class="table table-dark">
 			<thead>
@@ -100,7 +79,6 @@ def template(title, table, attempts, matched, score):
                     <th class="text-center tfoot-font-border" colspan="2">Intentos """ + str(attempts) + """</th>
                     <th class="text-center tfoot-font-border" colspan="2">Aciertos """ + str(matched) + """</th>
                     <th class="text-center tfoot-font-border" colspan="1">%""" + str(score) + """</th>
-                    <th class="text-center tfoot-font-border" colspan="1" id="time">HOla</th>
 				</tr>
 			</tfoot>
 		</table>
@@ -108,16 +86,11 @@ def template(title, table, attempts, matched, score):
 	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/js/bootstrap.bundle.min.js"
 		integrity="sha384-u1OknCvxWvY5kfmNBILK2hRnQC3Pr17a+RTT6rIHI7NnikvbZlHgTPOOmMi466C8"
 		crossorigin="anonymous"></script>
-<<<<<<< HEAD
-    <script src="timer.js"></script>
-=======
-    <script src="./p05/js/script.js"></script>
->>>>>>> 849c3ab941172e415318fb0af1d7dccd711cfbc4
+    <script src="./p04/js/script.js"></script>
 </body>
 
 </html>
 """)
-
 
 def initialFlipped(total):
     flipped = []
@@ -125,25 +98,21 @@ def initialFlipped(total):
         flipped.append(None)
     return flipped
 
-
 def flip(card, board):
     enumerate(board)
     board[card] = True
     return board
-
 
 def noFlip(card, board):
     enumerate(board)
     board[card] = False
     return board
 
-
 def initialCookie(total):
     string = ""
     for i in range(total):
         string += "0"
     return string
-
 
 def getCookie(cookie):
     flipped = initialFlipped(total)
@@ -154,7 +123,6 @@ def getCookie(cookie):
             flipped[i] = True
     return flipped
 
-
 def setCookie(board):
     flipped = ""
     for i, element in enumerate(board):
@@ -164,13 +132,9 @@ def setCookie(board):
             flipped += "1"
     return flipped
 
-
 def getCards():
     # Get images from images module
-    aux = []
-
-    for i in range(10):
-        aux.append(query(str(i)))
+    aux = img.get()
 
     # Shuffle aux array
     # random.shuffle(aux)
@@ -190,20 +154,17 @@ def getCards():
 
     return basenames
 
-
 def initialBoard(total):
     board = []
     for i in range(total):
         board.append(False)
     return board
 
-
 def getScore(matched, attempts):
     if matched == 0:
         return 0
     else:
         return floor((matched / (matched + attempts))*100)
-
 
 # Loading cards
 cards = getCards()
@@ -239,9 +200,6 @@ else:
     if len(card1) != 0 and card2 == "":
         C['card2'] = card
 
-    card1 = C['card1'].value
-    card2 = C['card2'].value
-
     if len(card1) != 0 and len(card2) != 0:
         if cards[int(card1)] == cards[int(card2)]:
             matched += 1
@@ -260,7 +218,6 @@ else:
             attempts += 1
             score = getScore(matched, attempts)
             board = getCookie(cookie)
-
             newBoard = noFlip(int(card1), board)
             newBoard = noFlip(int(card2), newBoard)
             C['board'] = setCookie(board)
