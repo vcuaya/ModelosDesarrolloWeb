@@ -6,7 +6,8 @@ import os
 import cgi
 from re import A
 import sys
-import random
+#import random
+import time
 
 # Get path to my module
 scriptPath = os.path.dirname(__file__)
@@ -64,6 +65,7 @@ def template(title, table, attempts, matched, score):
 </head>
 
 <body class="bg-dark">
+    
 	<div class="table-responsive">
 		<table class="table table-dark">
 			<thead>
@@ -79,6 +81,7 @@ def template(title, table, attempts, matched, score):
                     <th class="text-center tfoot-font-border" colspan="2">Intentos """ + str(attempts) + """</th>
                     <th class="text-center tfoot-font-border" colspan="2">Aciertos """ + str(matched) + """</th>
                     <th class="text-center tfoot-font-border" colspan="1">%""" + str(score) + """</th>
+                    <th class="text-center tfoot-font-border" colspan="1" id="time">HOla</th>
 				</tr>
 			</tfoot>
 		</table>
@@ -86,7 +89,7 @@ def template(title, table, attempts, matched, score):
 	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/js/bootstrap.bundle.min.js"
 		integrity="sha384-u1OknCvxWvY5kfmNBILK2hRnQC3Pr17a+RTT6rIHI7NnikvbZlHgTPOOmMi466C8"
 		crossorigin="anonymous"></script>
-    <script src="./p04/js/script.js"></script>
+    <script src="timer.js"></script>
 </body>
 
 </html>
@@ -200,6 +203,9 @@ else:
     if len(card1) != 0 and card2 == "":
         C['card2'] = card
 
+    card1 = C['card1'].value
+    card2 = C['card2'].value
+
     if len(card1) != 0 and len(card2) != 0:
         if cards[int(card1)] == cards[int(card2)]:
             matched += 1
@@ -218,6 +224,7 @@ else:
             attempts += 1
             score = getScore(matched, attempts)
             board = getCookie(cookie)
+
             newBoard = noFlip(int(card1), board)
             newBoard = noFlip(int(card2), newBoard)
             C['board'] = setCookie(board)

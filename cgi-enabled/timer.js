@@ -10,7 +10,7 @@
         
         if (bandera< 2) {
             bandera+=1;
-            
+            console.log("Si entro");
             document.getElementById("time").innerHTML = "Primero";
         }
         if(bandera==2){
