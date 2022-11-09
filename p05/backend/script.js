@@ -1,19 +1,24 @@
 $(document).ready(() => {
-    $('.card').on('click', () => {
-        let id = $('.card').attr('id');
-        console.log(id);
-
-        $.ajax({
-            url: "./server.php",
-            type: "GET",
-            data: { card: id },
-            success: function (response) {
-                console.log('Si entro');
-                console.log(response);
-            },
-            error: function () {
-                console.log('No funcionó');
-            }
-        });
+    let id1 = 0;
+    // let id2 = 1;
+    let id2 = 10;
+    $.ajax({
+        url: "./verifica.php",
+        type: "GET",
+        data: {
+            card1: id1,
+            card2: id2
+        },
+        success: function (response) {
+            console.log('Si entro');
+            console.log(response);
+            if (response)
+                console.log('Coinciden');
+            else
+                console.log('No Coinciden');
+        },
+        error: function () {
+            console.log('No funcionó');
+        }
     });
 });
