@@ -18,7 +18,7 @@
     });
 }); */
 
-function devolverCarta(x) {
+/* function devolverCarta(x) {
     return new Promise(resolve => {
       setTimeout(() => {
         //const je = '<img class="img-thumbnail img-fluid" src="./img/gato.png"></a>'
@@ -37,11 +37,27 @@ function devolverCarta(x) {
         
       }, 2000);
     });
-  }
+  } */
 
-async function carta(id) {
+/* async function carta(id) {
     document.getElementById(id).innerHTML = "Hiciste click";
     console.log(id)
     const a = await devolverCarta(id);
     document.getElementById(id).innerHTML = '<img class="img-thumbnail img-fluid" src=./../img/'+a+'>'
+} */
+
+async function carta(id) {
+    $.ajax({
+        url: "./server.php",
+        type: "GET",
+        data: { card: id},
+        success: function (response) {
+            console.log('Si entro');
+            //resolve(response);
+            document.getElementById(id).innerHTML = '<img class="img-thumbnail img-fluid" src=./../img/'+response+'>'
+        },
+        error: function () {
+            console.log('No funcionó');
+        }
+    });
 }
