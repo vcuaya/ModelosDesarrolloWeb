@@ -21,7 +21,7 @@ function devolverCarta(x,y) {
             }
         });
         
-      }, 2000);
+      }, 1000);
     });
 }
 
