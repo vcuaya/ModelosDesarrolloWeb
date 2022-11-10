@@ -30,8 +30,8 @@ async function carta2(id, id2) {
     console.log(id2)
     const siOno = await devolverCarta(id, id2);
     if (siOno == 1) {
-        document.getElementById(id).innerHTML = '<img class="img-thumbnail img-fluid" src="./img/200px-NAP-01_Back.png">'
-        document.getElementById(id2).innerHTML = '<img class="img-thumbnail img-fluid" src="./img/200px-NAP-01_Back.png">'
+        document.getElementById(id).src = './img/200px-NAP-01_Back.png'
+        document.getElementById(id2).src = './img/200px-NAP-01_Back.png'
     }
     a = ''
     b = ''
@@ -49,7 +49,7 @@ function carta(id) {
             success: function (response) {
                 console.log('Si entro');
                 //resolve(response);
-                document.getElementById(id).innerHTML = '<img class="img-thumbnail img-fluid" src=./img/' + response + '>'
+                document.getElementById(id).src = './img/' + response
             },
             error: function () {
                 console.log('No funcionó');
