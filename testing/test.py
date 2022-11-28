@@ -16,8 +16,10 @@ def getAddress(key):
 
     # All keys possess an address() property which is derived from your public key
     # This is what you share with others to receive payments.
-    return k.address
+    text = k.address
 
+    array = text.split(':', 1)
+    return array[1]
 
 def getBalance(key):
     # Import Key
